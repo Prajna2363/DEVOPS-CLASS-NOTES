@@ -1,0 +1,15 @@
+pipeline{
+
+    agent any
+
+    stages{
+        satge('hello'){
+            steps{
+                sh'''
+                echo "hellow guys good morning"
+                '''
+            }
+
+        }
+    }
+}
