@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_TAG = "20250801"
+        IMAGE_NAME = "prajna236/fullstack"
+        AWS_REGION = "us-east-1"
+        CLUSTER_NAME = "microdegree-cluster"
+    }
+
+    tools {
+        jdk 'java-17'
+        maven 'maven'
+    }
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Prajna2363/complete-cicd-project-microdegree.git'
+            }
+        }
+
+        stage('Compile') {
+            steps {
+                sh "mvn compile"
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh "mvn package"
+            }
+        }
+
+        stage('Build & Tag Docker Image') {
+            steps {
+                script {
+                    sh "docker build -t ${IMAGE_NAME}:${DOCKER_TAG} ."
+                }
+            }
+        }
+
+        stage('Docker Image Scan') {
+            steps {
+                script {
+                    sh "trivy image --format table -o trivy-image-report.html prajna236/fullstack:20250801"
+                }
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    sh "docker push ${IMAGE_NAME}:${DOCKER_TAG}"
+                }
+            }
+        } 
