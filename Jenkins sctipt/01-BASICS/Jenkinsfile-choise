@@ -3,7 +3,11 @@ pipeline{
      agent any
 
      parameters{
-        choise( )
+        choise(
+            name: 'ENV',
+            choises: ['Dev','Test','Prod'],
+            description: ' Enviroment to depoly'
+        )
      }
 
 
