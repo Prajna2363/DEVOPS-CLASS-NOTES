@@ -1,9 +1,8 @@
 pipeline{
-
-    agent any
+ agent any
 
     stages{
-        satge('hello'){
+        stage('hello'){
             steps{
                 sh'''
                     echo "hellow guys good morning"
