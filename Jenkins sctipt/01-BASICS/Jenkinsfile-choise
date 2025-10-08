@@ -1,0 +1,21 @@
+pipeline{
+  
+     agent any
+
+     parameters{
+        choise( )
+     }
+
+
+
+    stages{
+        stage('Deploy'){
+            steps{
+                
+                    echo "Deploying to ${params.ENV} Enviroment"
+            
+            }
+
+        }
+    }
+}
