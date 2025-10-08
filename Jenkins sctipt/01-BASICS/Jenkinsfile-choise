@@ -3,9 +3,9 @@ pipeline{
      agent any
 
      parameters{
-        choise(
+        choice(
             name: 'ENV',
-            choises: ['Dev','Test','Prod'],
+            choices: ['Dev','UAT','Test','Prod'],
             description: ' Enviroment to depoly'
         )
      }
