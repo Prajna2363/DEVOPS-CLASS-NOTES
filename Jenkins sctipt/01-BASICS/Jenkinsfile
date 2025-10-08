@@ -6,7 +6,7 @@ pipeline{
         satge('hello'){
             steps{
                 sh'''
-                echo "hellow guys good morning"
+                    echo "hellow guys good morning"
                 '''
             }
 
