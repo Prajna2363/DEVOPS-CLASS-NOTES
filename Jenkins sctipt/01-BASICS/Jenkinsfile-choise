@@ -9,17 +9,41 @@ pipeline{
             description: ' Enviroment to depoly'
         )
      }
-
-
-
     stages{
         stage('Deploy'){
             steps{
                 
                     echo "Deploying to ${params.ENV} Enviroment"
             
+            // adding the logic to switch env
+
+            script{
+                switch(params.ENV){
+                    case 'DEV':
+                    echo "Running on dev env.."
+                        
+                    break
+                    case 'UAT':
+                    echo "Running on UAT env.."
+                    break
+                    case 'Test':
+                    echo "Running on Test env.."
+                    break
+                    case 'Prod':
+                    echo "Running on Prod env.."
+                    break
+                    default:
+                    echo "Invalid Env selected"
+                }
+
+            }
+            
             }
 
         }
     }
+    
+
+
+
 }
